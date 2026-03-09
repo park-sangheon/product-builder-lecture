@@ -4,129 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lotto Number Generator</title>
-    <style>
-        html, body {
-             height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden; 
-            background-color: #000; /* Fallback background */
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffffff;
-            position: relative; 
-        }
-
-        .background-overlay {
-            position: fixed; 
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Using an inline SVG for the background to avoid network issues */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23444' stroke-width='1'%3E%3Cpath d='M-200,400 l200,-400 M-100,400 l200,-400 M0,400 l200,-400 M100,400 l200,-400 M200,400 l200,-400 M300,400 l200,-400 M400,400 l200,-400 M500,400 l200,-400 M600,400 l200,-400 M700,400 l200,-400'/%3E%3Cpath d='M-200,400 l-200,400 M-100,400 l-200,400 M0,400 l-200,400 M100,400 l-200,400 M200,400 l-200,400 M300,400 l-200,400 M400,400 l-200,400 M500,400 l-200,400 M600,400 l-200,400 M700,400 l-200,400'/%3E%3Ccircle cx='400' cy='400' r='400' fill='black'/%3E%3Cg fill='%23777'%3E%3Ccircle cx='400' cy='400' r='2'/><circle cx='100' cy='100' r='2'/><circle cx='200' cy='600' r='2'/><circle cx='700' cy='200' r='2'/><circle cx='600' cy='500' r='1'/><circle cx='50' cy='300' r='1'/><circle cx='350' cy='200' r='1'/><circle cx='650' cy='700' r='2'/><circle cx='250' cy='450' r='1'/><circle cx='750' cy='550' r='1'/></g></g></svg>");
-            z-index: -2; 
-        }
-
-        body::before {
-            content: "dhlottery.co.kr";
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-25deg);
-            font-size: 15vmin;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.05);
-            z-index: 1;
-            pointer-events: none;
-            text-transform: uppercase;
-        }
-
-        .container {
-            text-align: center;
-            background: rgba(30, 30, 30, 0.7);
-            padding: 30px 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            z-index: 2; 
-            position: relative;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: yellow; /* Diagnostic style change */
-            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-            margin-bottom: 25px;
-        }
-
-        button {
-            padding: 15px 30px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(45deg, #4CAF50, #81C784);
-            color: white;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-        }
-
-        button:active {
-            transform: translateY(-1px);
-        }
-
-        .numbers-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            min-height: 70px; 
-        }
-
-        .number {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            background-color: #f0f0f0;
-            transform: scale(0); 
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0) rotate(-180deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="background-overlay"></div>
+    <div class="controls">
+        <button id="theme-toggle">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-text">Dark Mode</span>
+        </button>
+    </div>
+
+    <div class="background-overlay">
+        <svg id="bg-svg" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'>
+            <g fill='none' stroke='var(--overlay-stroke)' stroke-width='1'>
+                <path d='M-200,400 l200,-400 M-100,400 l200,-400 M0,400 l200,-400 M100,400 l200,-400 M200,400 l200,-400 M300,400 l200,-400 M400,400 l200,-400 M500,400 l200,-400 M600,400 l200,-400 M700,400 l200,-400'/>
+                <path d='M-200,400 l-200,400 M-100,400 l-200,400 M0,400 l-200,400 M100,400 l-200,400 M200,400 l-200,400 M300,400 l-200,400 M400,400 l-200,400 M500,400 l-200,400 M600,400 l-200,400 M700,400 l-200,400'/>
+                <circle cx='400' cy='400' r='400' fill='var(--overlay-circle-fill)'/>
+                <g fill='var(--overlay-dots)'>
+                    <circle cx='400' cy='400' r='2'/><circle cx='100' cy='100' r='2'/><circle cx='200' cy='600' r='2'/><circle cx='700' cy='200' r='2'/><circle cx='600' cy='500' r='1'/><circle cx='50' cy='300' r='1'/><circle cx='350' cy='200' r='1'/><circle cx='650' cy='700' r='2'/><circle cx='250' cy='450' r='1'/><circle cx='750' cy='550' r='1'/>
+                </g>
+            </g>
+        </svg>
+    </div>
+
     <div class="container">
         <h1>Lotto Number Generator</h1>
         <button id="generate">Generate Numbers</button>

@@ -1,6 +1,39 @@
 const generateBtn = document.getElementById('generate');
 const numbersContainer = document.getElementById('numbers');
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const themeText = document.getElementById('theme-text');
+const body = document.body;
 
+// Theme toggle logic
+function setTheme(isLight) {
+    if (isLight) {
+        body.classList.add('light-mode');
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.classList.remove('light-mode');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Initial theme setup
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    setTheme(true);
+} else {
+    setTheme(false);
+}
+
+themeToggle.addEventListener('click', () => {
+    const isLight = body.classList.contains('light-mode');
+    setTheme(!isLight);
+});
+
+// Lotto generation logic
 generateBtn.addEventListener('click', () => {
     numbersContainer.innerHTML = '';
     const numbers = new Set();

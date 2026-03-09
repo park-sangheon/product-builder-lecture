@@ -1,10 +1,40 @@
+:root {
+    --bg-color: #000;
+    --text-color: #ffffff;
+    --container-bg: rgba(30, 30, 30, 0.7);
+    --container-border: rgba(255, 255, 255, 0.18);
+    --h1-color: #f1c40f;
+    --h1-shadow: rgba(76, 175, 80, 0.5);
+    --btn-gradient-start: #4CAF50;
+    --btn-gradient-end: #81C784;
+    --overlay-stroke: #444;
+    --overlay-circle-fill: #000;
+    --overlay-dots: #777;
+    --watermark-color: rgba(255, 255, 255, 0.05);
+}
+
+body.light-mode {
+    --bg-color: #f0f2f5;
+    --text-color: #333333;
+    --container-bg: rgba(255, 255, 255, 0.9);
+    --container-border: rgba(0, 0, 0, 0.1);
+    --h1-color: #2c3e50;
+    --h1-shadow: rgba(0, 0, 0, 0.1);
+    --btn-gradient-start: #2ecc71;
+    --btn-gradient-end: #27ae60;
+    --overlay-stroke: #ddd;
+    --overlay-circle-fill: #fff;
+    --overlay-dots: #ccc;
+    --watermark-color: rgba(0, 0, 0, 0.03);
+}
 
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden; 
-    background-color: #000; /* Fallback background */
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
 }
 
 body {
@@ -12,7 +42,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
+    color: var(--text-color);
     position: relative; 
 }
 
@@ -22,9 +52,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Using an inline SVG for the background to avoid network issues */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23444' stroke-width='1'%3E%3Cpath d='M-200,400 l200,-400 M-100,400 l200,-400 M0,400 l200,-400 M100,400 l200,-400 M200,400 l200,-400 M300,400 l200,-400 M400,400 l200,-400 M500,400 l200,-400 M600,400 l200,-400 M700,400 l200,-400'/%3E%3Cpath d='M-200,400 l-200,400 M-100,400 l-200,400 M0,400 l-200,400 M100,400 l-200,400 M200,400 l-200,400 M300,400 l-200,400 M400,400 l-200,400 M500,400 l-200,400 M600,400 l-200,400 M700,400 l-200,400'/%3E%3Ccircle cx='400' cy='400' r='400' fill='black'/%3E%3Cg fill='%23777'%3E%3Ccircle cx='400' cy='400' r='2'/%3E%3Ccircle cx='100' cy='100' r='2'/%3E%3Ccircle cx='200' cy='600' r='2'/%3E%3Ccircle cx='700' cy='200' r='2'/%3E%3Ccircle cx='600' cy='500' r='1'/%3E%3Ccircle cx='50' cy='300' r='1'/%3E%3Ccircle cx='350' cy='200' r='1'/%3E%3Ccircle cx='650' cy='700' r='2'/%3E%3Ccircle cx='250' cy='450' r='1'/%3E%3Ccircle cx='750' cy='550' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     z-index: -2; 
+    opacity: 0.5;
+}
+
+/* We'll use a dynamic background color for the circle in the SVG */
+#bg-svg {
+    width: 100%;
+    height: 100%;
 }
 
 body::before {
@@ -35,7 +70,7 @@ body::before {
     transform: translate(-50%, -50%) rotate(-25deg);
     font-size: 15vmin;
     font-weight: 900;
-    color: rgba(255, 255, 255, 0.05);
+    color: var(--watermark-color);
     z-index: 1;
     pointer-events: none;
     text-transform: uppercase;
@@ -43,44 +78,75 @@ body::before {
 
 .container {
     text-align: center;
-    background: rgba(30, 30, 30, 0.7);
+    background: var(--container-bg);
     padding: 30px 40px;
     border-radius: 20px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid var(--container-border);
     z-index: 2; 
     position: relative;
+    transition: all 0.3s ease;
 }
 
 h1 {
     font-size: 2.5rem;
-    color: yellow; /* Diagnostic style change */
-    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    color: var(--h1-color);
+    text-shadow: 0 0 10px var(--h1-shadow);
     margin-bottom: 25px;
 }
 
-button {
+.controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+#theme-toggle {
+    background: none;
+    border: 2px solid var(--container-border);
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    margin-bottom: 0;
+    width: auto;
+}
+
+#theme-toggle:hover {
+    background: var(--container-border);
+    transform: scale(1.05);
+}
+
+#generate {
     padding: 15px 30px;
     font-size: 1.4rem;
     font-weight: bold;
     cursor: pointer;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(45deg, #4CAF50, #81C784);
+    background: linear-gradient(45deg, var(--btn-gradient-start), var(--btn-gradient-end));
     color: white;
     margin-bottom: 30px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
 }
 
-button:hover {
+#generate:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
-button:active {
+#generate:active {
     transform: translateY(-1px);
 }
 
@@ -101,9 +167,9 @@ button:active {
     align-items: center;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #333;
+    color: #fff; /* Always white text on colored circles */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    background-color: #f0f0f0;
     transform: scale(0); 
 }
 
