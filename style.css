@@ -11,6 +11,7 @@
     --overlay-circle-fill: #000;
     --overlay-dots: #777;
     --watermark-color: rgba(255, 255, 255, 0.05);
+    --input-bg: rgba(255, 255, 255, 0.1);
 }
 
 body.light-mode {
@@ -26,6 +27,7 @@ body.light-mode {
     --overlay-circle-fill: #fff;
     --overlay-dots: #ccc;
     --watermark-color: rgba(0, 0, 0, 0.03);
+    --input-bg: rgba(0, 0, 0, 0.05);
 }
 
 html, body {
@@ -56,7 +58,6 @@ body {
     opacity: 0.5;
 }
 
-/* We'll use a dynamic background color for the circle in the SVG */
 #bg-svg {
     width: 100%;
     height: 100%;
@@ -88,10 +89,16 @@ body::before {
     z-index: 2; 
     position: relative;
     transition: all 0.3s ease;
+    max-width: 450px;
+    width: 90%;
+}
+
+.hidden {
+    display: none !important;
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--h1-color);
     text-shadow: 0 0 10px var(--h1-shadow);
     margin-bottom: 25px;
@@ -102,13 +109,15 @@ h1 {
     top: 20px;
     right: 20px;
     z-index: 10;
+    display: flex;
+    gap: 10px;
 }
 
-#theme-toggle {
-    background: none;
-    border: 2px solid var(--container-border);
+.nav-btn {
+    background: var(--container-bg);
+    border: 1px solid var(--container-border);
     color: var(--text-color);
-    padding: 8px 12px;
+    padding: 8px 15px;
     border-radius: 20px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -116,38 +125,79 @@ h1 {
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
-    box-shadow: none;
-    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     width: auto;
 }
 
-#theme-toggle:hover {
+.nav-btn:hover {
     background: var(--container-border);
     transform: scale(1.05);
 }
 
-#generate {
+button {
     padding: 15px 30px;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
     border: none;
     border-radius: 10px;
     background: linear-gradient(45deg, var(--btn-gradient-start), var(--btn-gradient-end));
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     width: 100%;
 }
 
-#generate:hover {
+button:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
-#generate:active {
-    transform: translateY(-1px);
+.secondary-btn {
+    background: transparent;
+    border: 1px solid var(--container-border);
+    color: var(--text-color);
+    box-shadow: none;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.secondary-btn:hover {
+    background: var(--container-border);
+    box-shadow: none;
+}
+
+/* Form Styles */
+.contact-form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--container-border);
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 120px;
+    resize: none;
 }
 
 .numbers-container {
@@ -159,15 +209,15 @@ h1 {
 }
 
 .number {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    color: #fff; /* Always white text on colored circles */
+    color: #fff;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     transform: scale(0); 

@@ -5,6 +5,12 @@ const themeIcon = document.getElementById('theme-icon');
 const themeText = document.getElementById('theme-text');
 const body = document.body;
 
+// New elements for contact form
+const contactToggle = document.getElementById('contact-toggle');
+const backToMain = document.getElementById('back-to-main');
+const mainContainer = document.getElementById('main-container');
+const contactContainer = document.getElementById('contact-container');
+
 // Theme toggle logic
 function setTheme(isLight) {
     if (isLight) {
@@ -32,6 +38,15 @@ themeToggle.addEventListener('click', () => {
     const isLight = body.classList.contains('light-mode');
     setTheme(!isLight);
 });
+
+// Navigation logic
+function toggleContainers() {
+    mainContainer.classList.toggle('hidden');
+    contactContainer.classList.toggle('hidden');
+}
+
+contactToggle.addEventListener('click', toggleContainers);
+backToMain.addEventListener('click', toggleContainers);
 
 // Lotto generation logic
 generateBtn.addEventListener('click', () => {

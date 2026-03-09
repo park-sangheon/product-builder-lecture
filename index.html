@@ -8,9 +8,13 @@
 </head>
 <body>
     <div class="controls">
-        <button id="theme-toggle">
+        <button id="theme-toggle" class="nav-btn">
             <span id="theme-icon">🌙</span>
             <span id="theme-text">Dark Mode</span>
+        </button>
+        <button id="contact-toggle" class="nav-btn">
+            <span>✉️</span>
+            <span>제휴 문의</span>
         </button>
     </div>
 
@@ -27,11 +31,28 @@
         </svg>
     </div>
 
-    <div class="container">
+    <div id="main-container" class="container">
         <h1>Lotto Number Generator</h1>
         <button id="generate">Generate Numbers</button>
         <div id="numbers" class="numbers-container"></div>
     </div>
+
+    <div id="contact-container" class="container hidden">
+        <h1>제휴 문의</h1>
+        <form action="https://formspree.io/f/mqakevye" method="POST" class="contact-form">
+            <div class="form-group">
+                <label for="email">이메일 주소</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" placeholder="제휴 관련 문의 내용을 입력해주세요." required></textarea>
+            </div>
+            <button type="submit" id="submit-form">문의 보내기</button>
+            <button type="button" id="back-to-main" class="secondary-btn">돌아가기</button>
+        </form>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
